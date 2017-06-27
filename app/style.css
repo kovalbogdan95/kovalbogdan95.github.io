@@ -273,6 +273,11 @@ input {
       letter-spacing: 1px;
 }
 
+input, textarea 
+{
+	outline: none;
+}
+
 .nameAndEmail{
  display: inline-block;
 }
@@ -295,13 +300,13 @@ textarea#form {
 
 
 
-.nameAndEmail input:hover {
+.nameAndEmail input:focus {
 
 
    border:2px solid #00CDCF;
 }
 
-textarea#form:hover{
+textarea#form:focus{
 
 
    border:2px solid #00CDCF;
