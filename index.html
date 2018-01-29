@@ -57,6 +57,10 @@
 			    <div class="sixteen wide column">
 			    	<button class='red ui button' v-on:click='removeAllTask'><i class="remove circle icon"></i>Remove All Task</button>
 			    </div>
+			  	<div class="sixteen wide column">
+			    	<button class='orange ui button' v-on:click='sortByName'><i class="sort alphabet ascending icon"></i>Sort by name</button>
+			    </div>
+			    
 			</div>
 			<table class="ui inverted blue selectable celled left aligned table">
 				<thead><tr><th><i class="tasks icon"></i>Yours tasks</th></tr></thead>
@@ -100,6 +104,13 @@
 				},
 				randomise: function () {
 					this.todos = this.todos.sort(function(a, b){return 0.5 - Math.random()});
+				},
+				sortByName: function () {
+					this.todos = this.todos.sort(function(a, b){
+    if(a.text[0] < b.text[0]) return -1;
+    if(a.text[0] > b.text[0]) return 1;
+    return 0;
+})
 				}
 			}
 		});
