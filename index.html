@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Hello world</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.28/vue.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.9/semantic.min.css"/>
+	<style type="text/css">
+		body > .ui.container {
+   		margin-top: 3em;
+		}
+		.ui.container > h1 {
+    		font-size: 3em;
+    		text-align: center;
+    		font-weight: normal;
+    		margin-top: 1em;
+    	}
+    	.ui.container > .header {
+    		font-weight: normal;
+    		margin: 4em 0em 3em;
+		}
+		.green.ui.button {
+			margin-left: 20px;
+		}
+		table.ui.table.inverted {
+			margin-top: 3em;
+			font-size: 1.3em;
+			margin-bottom: 3em;
+		}
+	</style>
+<body>
+	<div class="ui container">
+		<h1><i class="add to calendar icon"></i>Simple TODO app</h1>
+		<div class="ui header ">
+			<h2>How to use?</h2>
+			<div class="ui raised segment">
+			<p class="">Just type in you task in the field and press 'plus' button or 'Enter' on your keyboard.</p>
+			</div>
+		</div>
+		<div id="todos">
+			<div class="stackable two column ui grid container">
+				<div class="four wide column">
+					<div class="ui right action input">
+				      	<input v-model="newTodo" v-on:keyup.enter="addTodo" class="inpun-popup" data-content="Type in your task here and pres 'plus' button or 'Enter' on kyboard">
+				      	<div class="ui teal button" v-on:click='addTodo'>
+				        <i class="add icon"></i>
+				        Add Task
+				     	</div>
+			    	</div>
+		    	</div>
+		    	<div class="sixteen wide column">
+			    	<button class='blue ui button' v-on:click='reverseTodos'><i class="refresh icon"></i>Reverse</button>
+			    </div>
+			    <div class="sixteen wide column">
+			    	<button class='yellow ui button' v-on:click='randomise'><i class="random icon"></i>Randomise</button>
+			    </div>
+			    <div class="sixteen wide column">
+			    	<button class='red ui button' v-on:click='removeAllTask'><i class="remove circle icon"></i>Remove All Task</button>
+			    </div>
+			</div>
+			<table class="ui inverted blue selectable celled left aligned table">
+				<thead><tr><th><i class="tasks icon"></i>Yours tasks</th></tr></thead>
+				<tbody>
+				<tr v-for="todo in todos">
+					<td>
+					<span>{{ todo.text }}</span>
+					<button class='green ui button' v-on:click="removeTodo($index)"><i class="check circle icon"></i>Done</button>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script>
+		new Vue ({
+			el: '#todos',
+			data: {
+				newTodo: '',
+				todos: [
+				{ text: 'Add your first task!'}
+				]
+			},
+			methods: {
+				addTodo: function() {
+					var text = this.newTodo.trim()
+					if (text) {
+						this.todos.unshift({text: text})
+						this.newTodo = ''
+					}
+				},
+				removeTodo: function(index) {
+					this.todos.splice(index, 1)
+				},
+				reverseTodos: function () {
+					this.todos = this.todos.reverse();
+				},
+				removeAllTask: function () {
+					this.todos = []
+				},
+				randomise: function () {
+					this.todos = this.todos.sort(function(a, b){return 0.5 - Math.random()});
+				}
+			}
+		});
+	</script>
+</body>
+</html>
