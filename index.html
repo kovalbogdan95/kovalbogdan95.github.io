@@ -37,7 +37,7 @@
 			<p class="">Just type in you task in the field and press 'plus' button or 'Enter' on your keyboard.</p>
 			</div>
 		</div>
-		<div id="todos">
+		<div id="todosapp">
 			<div class="stackable two column ui grid container">
 				<div class="four wide column">
 					<div class="ui right action input">
@@ -78,32 +78,36 @@
 
 	<script>
 		new Vue ({
-			el: '#todos',
+			el: '#todosapp',
 			data: {
 				newTodo: '',
-				todos: [
-				{ text: 'Add your first task!'}
-				]
+				todos: localStorage.getItem('todos')? JSON.parse(localStorage['todos'])['tasks']: [ {text: 'Add your task'}]
 			},
 			methods: {
 				addTodo: function() {
+
 					var text = this.newTodo.trim()
 					if (text) {
-						this.todos.unshift({text: text})
+						this.todos.unshift({text: text});
+						localStorage.setItem('todos', JSON.stringify({tasks: this.todos}));
 						this.newTodo = ''
 					}
 				},
 				removeTodo: function(index) {
 					this.todos.splice(index, 1)
+					localStorage.setItem('todos', JSON.stringify({tasks: this.todos}));
 				},
 				reverseTodos: function () {
 					this.todos = this.todos.reverse();
+					localStorage.setItem('todos', JSON.stringify({tasks: this.todos}));
 				},
 				removeAllTask: function () {
 					this.todos = []
+					localStorage.setItem('todos', JSON.stringify({tasks: this.todos}));
 				},
 				randomise: function () {
 					this.todos = this.todos.sort(function(a, b){return 0.5 - Math.random()});
+					localStorage.setItem('todos', JSON.stringify({tasks: this.todos}));
 				},
 				sortByName: function () {
 					this.todos = this.todos.sort(function(a, b){
@@ -111,6 +115,7 @@
     if(a.text[0] > b.text[0]) return 1;
     return 0;
 })
+					localStorage.setItem('todos', JSON.stringify({tasks: this.todos}));
 				}
 			}
 		});
